@@ -1,61 +1,24 @@
-version : '3'
+version: '3'
 services:
-  #Php Service
-  app_laravel:
-    build:
-      context: .
-      dockerfile: ./Devops/php/Dockerfile
-    image: digitalocean.com/php
-    container_name: app_laravel
+  web:
     restart: always
-    tty: true
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-    working_dir: /var/www/html
+    build: .
     volumes:
-      - ./app_laravel:/var/www/html/
-      - ./Devops/php/local.ini:/usr/local/etc/php/conf.d/local.ini
-    networks:
-      - app-network
-
-  #Nginx Service
-  webserver:
-    image: nginx:alpine
-    container_name: webserver
+      - ./:/var/www/
+  db:
+    image: postgres:12.0-alpine
     restart: always
-    tty: true
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: eyetech
+    volumes:
+      - "./.docker/dbdata:/var/lib/postgresql/data"
+  nginx:
+    build: ./.docker/nginx
+    restart: always
     ports:
       - "80:80"
-      - "443:443"
     volumes:
-      - ./app_magento/:/var/www
-      - ./Devops/nginx/conf.d/:/etc/nginx/conf.d/
-    networks:
-      - app-network
-
-  #mysql service
-  db:
-    image: mysql:5.7.22
-    container_name: db
-    restart: always
-    tty: true
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: toor
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - dbdata:/var/lib/mysql
-      - ./Devops/mysql/my.cnf:/etc/mysql/my.cnf
-    networks:
-      - app-network
-  #Networks
-networks:
-  app-network:
-    driver: bridge
-volumes:
-  dbdata:
-    driver: local
+      - ./:/var/www
+    depends_on:
+      - web
