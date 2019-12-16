@@ -1,11 +1,13 @@
 version: '3'
 services:
   web:
+    container_name: app_laravel
     restart: always
     build: .
     volumes:
       - ./:/var/www/
   db:
+    container_name: db_laravel
     image: postgres:12.0-alpine
     restart: always
     environment:
@@ -14,6 +16,7 @@ services:
     volumes:
       - "./.docker/dbdata:/var/lib/postgresql/data"
   nginx:
+    container_name: web_laravel
     build: ./.docker/nginx
     restart: always
     ports:
