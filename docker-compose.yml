@@ -6,6 +6,9 @@ services:
     build: .
     volumes:
       - ./:/var/www/
+    environment:
+      SERVICE_NAME: app_laravel
+      SERVICE_TAGS: dev
     networks:
       - app_network
   nginx:
@@ -24,24 +27,25 @@ services:
   db_laravel:
     image: mysql:5.7.22
     container_name: db_laravel
-    restart: unless-stopped
+    restart: always
     tty: true
     ports:
       - "3306:3306"
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: eyetech
+      MYSQL_USER: eyetech
+      MYSQL_PASSWORD: eyetech
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
     volumes:
       - dbdata:/var/lib/mysql
       - ./.docker/mysql/my.cnf:/etc/mysql/my.cnf
-    environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: laravel
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: laravel
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
     networks:
       - app_network
   #View Magento2 DB
   phpmyadmin:
+    container_name: pma_laravel
     image: phpmyadmin/phpmyadmin:latest
     ports:
       - 8181:80

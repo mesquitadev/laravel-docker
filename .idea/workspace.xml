@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4517e516-6313-4988-92e8-a8f14833c607" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.docker/mysql/my.cnf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_17_105947_create_user_roles_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.docker/nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/.docker/nginx/nginx.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -154,7 +151,9 @@
       <option name="presentableId" value="Default" />
       <updated>1576496600204</updated>
       <workItem from="1576496601345" duration="8418000" />
-      <workItem from="1576580308259" duration="1654000" />
+      <workItem from="1576580308259" duration="4292000" />
+      <workItem from="1576588009761" duration="25000" />
+      <workItem from="1576593472416" duration="2103000" />
     </task>
     <servers />
   </component>
