@@ -6,15 +6,8 @@ services:
     build: .
     volumes:
       - ./:/var/www/
-  db:
-    container_name: db_laravel
-    image: postgres:12.0-alpine
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: eyetech
-    volumes:
-      - "./.docker/dbdata:/var/lib/postgresql/data"
+    networks:
+      - app_network
   nginx:
     container_name: web_laravel
     build: ./.docker/nginx
@@ -25,3 +18,40 @@ services:
       - ./:/var/www
     depends_on:
       - web
+    networks:
+      - app_network
+  #MySQL Service Magento2
+  db_laravel:
+    image: mysql:5.7.22
+    container_name: db_laravel
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./.docker/mysql/my.cnf:/etc/mysql/my.cnf
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - app_network
+  #View Magento2 DB
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 8181:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - app_network
+networks:
+  app_network:
+    driver: bridge
+volumes:
+  dbdata:
+    driver: local
